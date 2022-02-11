@@ -80,10 +80,9 @@ def login_user():
 
 
 def logout():
-    con = current_app.get_connection()
-
+    
     try:
-        con.logout()
+        current_app.logout()
         flash('Sie sind nun ausgeloggt.', category='alert alert-success')
     except:
         session.clear()

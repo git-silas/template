@@ -23,8 +23,12 @@
             {% block navbar %}
             <nav class="">
                 <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                {% if 'user' in session %}
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
                 <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 <a class="nav-link" href="{{ url_for('registration') }}">Registrieren</a>
+                {% endif %}
             </nav>
             {% endblock navbar %}
         </div>

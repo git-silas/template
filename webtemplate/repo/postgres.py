@@ -131,7 +131,6 @@ class PostgresConnectionAPI(ConnectionAPI):
         )
     
     def get_user(self, ident: str = None, email: str = None) -> User:
-        print(email)
         user = self._execute_one(
             "SELECT ident, name, first_name, last_name, email, password "
             "FROM users "
