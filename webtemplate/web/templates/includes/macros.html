@@ -1,0 +1,22 @@
+{% macro render_field(field) %}
+
+<div class="">
+    <div>
+        {{ field.label(class="") }}
+    </div>
+    <div>
+        {{ field(class="") | safe }}
+    </div>
+
+    {% if field.errors %}
+
+    {% for error in field.errors %}
+    <div>
+        {{ error }}
+    </div>
+    {% endfor %}
+
+    {% endif %}
+</div>
+
+{% endmacro %}

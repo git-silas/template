@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% from "includes/macros.html" import render_field %}
+
+{% block title %}
+Login
+{% endblock title %}
+{% block body %}
+<div class="">
+    <h1 class="">Login</h1>
+    <form action="{{ url_for('login_user') }}" method="post">
+        <div class="">
+            {{ form.csrf_token }}
+            {{ render_field(form.email) }}
+            {{ render_field(form.password) }}
+            <div class="">
+                {{ form.submit(class="") }}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock body %}

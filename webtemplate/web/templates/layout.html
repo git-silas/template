@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block style %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
+    {% endblock style %}
+
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    <div class="">
+        {% block header %}
+        <div class="">
+            {% block navbar %}
+            <nav class="">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-link" href="{{ url_for('registration') }}">Registrieren</a>
+            </nav>
+            {% endblock navbar %}
+        </div>
+        {% include "includes/flash_messages.html" %}
+        {% endblock header %}
+
+        <div class="">
+            {% block body %}
+            {% endblock body %}
+        </div>
+
+        {% block footer %}
+        
+        {% endblock footer %}
+    </div>
+</body>
+
+</html>
