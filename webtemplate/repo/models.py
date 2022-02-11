@@ -11,6 +11,7 @@ class Model:
 class User(Model):
 
     ident: Optional[str]
+    name: Optional[str]
     first_name: Optional[str]
     last_name: Optional[str]
     email: Optional[str]

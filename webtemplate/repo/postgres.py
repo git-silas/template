@@ -1,3 +1,4 @@
+from datetime import datetime
 import psycopg2
 
 from typing import Sequence, Any
@@ -59,10 +60,12 @@ class PostgresRepository(AbstractRepository):
                     """
                 create table users (
                     ident VARCHAR(256) UNIQUE NOT NULL,
+                    name VARCHAR(256) NOT NULL,
                     first_name VARCHAR(256) NOT NULL,
                     last_name VARCHAR(256) NOT NULL,
                     email VARCHAR(256) UNIQUE NOT NULL,
                     password VARCHAR(256) NOT NULL,
+                    datetime TIMESTAMP,
                     PRIMARY KEY (ident)
                 )
                 """
@@ -122,21 +125,22 @@ class PostgresConnectionAPI(ConnectionAPI):
 
     def set_user(self, user: User):
         self._execute(
-            "INSERT INTO users(ident, first_name, last_name, email, password) "
-            "VALUES (%s, %s, %s, %s, %s)",
-            (user.ident, user.first_name, user.last_name, user.email, user.password),
+            "INSERT INTO users(ident, name, first_name, last_name, email, password, datetime) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (user.ident, user.name, user.first_name, user.last_name, user.email, user.password, datetime.today().strftime('%Y-%m-%d %H:%M:%S')),
         )
     
-    def get_user(self, ident: str) -> User:
+    def get_user(self, ident: str = None, email: str = None) -> User:
         user = self._execute_one(
-            "SELECT first_name, last_name, email "
+            "SELECT ident, name, first_name, last_name, email, password "
             "FROM users "
-            "WHERE ident=%s",
-            (ident,),
+            "WHERE ident=%s "
+            "OR email=%s",
+            (ident, email),
         )
 
         if user:
-            return User(ident, user[0], user[1], user[2])
+            return User(user[0], user[1], user[2], user[3], user[4], user[5])
 
         return user
 

@@ -1,8 +1,8 @@
 import uuid
 
-from flask import render_template, redirect, url_for, flash, current_app
+from flask import render_template, redirect, url_for, flash, current_app, session
 
-#from .utils import check_email, check_user
+from .utils import check_email, hash_password
 from .forms import RegisterForm, LoginForm
 
 from webtemplate.repo.models import User
@@ -25,13 +25,14 @@ def register_user():
         email = form.email.data
         password = form.password.data
 
-        if email:
+        if check_email(email):
             user = User(
                 ident=ident,
+                name=first_name.lower() + '_' + last_name.lower(),
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
-                password=password,
+                password=hash_password(password),
             )
             con.set_user(user)
 
