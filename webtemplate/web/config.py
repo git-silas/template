@@ -26,9 +26,9 @@ URL_PREFIX = "/"
 
 DB_TYPE = "postgres"
 DB_HOST = "localhost"
-DB_DATABASE = "website"
+DB_DATABASE = "template"
 DB_USER = "postgres"
-DB_PW = "22cef337-6bde-4e44-942b-77e0ec89d709"
+DB_PW = "postgres!QS783mx7g"
 DB_PORT = "5432"
 
 MAIL_SERVER = "localhost"

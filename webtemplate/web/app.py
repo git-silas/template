@@ -106,7 +106,6 @@ def create_app(config_mapping: Dict[str, Any] = None) -> Template:
     csrf.init_app(app)
 
     app.add_url_rule('/', 'home', main_views.home, methods=['GET', 'POST'])
-    
 
     app.add_url_rule('/registration', 'registration', auth_views.registration, methods=['GET', 'POST'])
     app.add_url_rule('/registration/user', 'register_user', auth_views.register_user, methods=['GET', 'POST'])
