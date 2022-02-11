@@ -2,7 +2,7 @@ import uuid
 
 from flask import render_template, redirect, url_for, flash, current_app, session
 
-from .utils import check_email, hash_password
+from .utils import check_email, hash_password, check_user
 from .forms import RegisterForm, LoginForm
 
 from webtemplate.repo.models import User
@@ -55,15 +55,21 @@ def login():
 
 
 def login_user():
+    con = current_app.get_connection()
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
 
-        if email:
+        user = con.get_user(email=email)
+
+        if check_user(email, password) and user:
+
+            current_app.login(user)
+                
             flash('Sie sind nun eingeloogt.', category='alert alert-success')
             return redirect(url_for('home'))
-
+            
         else:
             flash('Passwort oder E-Mail Adresse stimmen nicht.', category='alert alert-error')
             return redirect(url_for('login'))
@@ -74,8 +80,13 @@ def login_user():
 
 
 def logout():
-    
-    flash('Sie sind nun ausgeloggt.', category='alert alert-success')
-    
+    con = current_app.get_connection()
 
-    return render_template('logout.html')
+    try:
+        con.logout()
+        flash('Sie sind nun ausgeloggt.', category='alert alert-success')
+    except:
+        session.clear()
+        flash('Sie sind nun ausgeloggt.', category='alert alert-success')
+    
+    return redirect(url_for('home'))
